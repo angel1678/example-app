@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string("phone");
             $table->string("avatar")->nullable();
             $table->string("email")->nullable();
-            $table->text("description")->nullable();
+            $table->string("description")->nullable();
             $table->enum("visibility", ["private", "public"])->default("public");
-            $table->foreignid("user_id")->constrained()->onDelete("cascade");
+            $table->foreignid("user_id")->constrained();
             $table->timestamps();
         });
     }

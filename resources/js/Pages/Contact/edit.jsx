@@ -6,15 +6,15 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import React from 'react'
 
-const Create = ({auth}) => {
+const Edit = ({auth, contact}) => {
     const initialValues = {
-        name: "",
-        phone: "",
+        name: contact.name,
+        phone: contact.phone,
         avatar: null,
-        email: "",
-        description: "",
-        visibility: ""
-    }
+        email: contact.email,
+        description: contact.description,
+        visibility: contact.visibility
+    } 
     const {data, errors, setData, post} = useForm({
         initialValues
     })
@@ -28,7 +28,7 @@ const Create = ({auth}) => {
     user={auth.user}
     header={
     <div className="flex justify-between">
-    <h2 className="font-semibold text-xl text-gray-800 leading-tight">Crear Contacto</h2>
+    <h2 className="font-semibold text-xl text-gray-800 leading-tight">Actualizar Contacto</h2>
     <Link href={route('contact.index')} >Contactos</Link>
     </div>
     }
@@ -126,7 +126,7 @@ const Create = ({auth}) => {
                         </div>   
                         <div className="flex justify-center">
                         <PrimaryButton>
-                            Crear Contacto
+                            Actualizar Contacto
                             </PrimaryButton>          
 
                         </div>
@@ -140,4 +140,4 @@ const Create = ({auth}) => {
   )
 }
 
-export default Create
+export default Edit
