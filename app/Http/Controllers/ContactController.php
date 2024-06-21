@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Laravel\Facades\Image;
 
 class ContactController extends Controller
 {
@@ -71,22 +75,36 @@ class ContactController extends Controller
      */
     public function update(UpdateRequest $request, Contact $contact)
     {
-        $data =$request->only('name','email','phone','description', 'visibility');
-        if($request->hasFile('avatar')){
-            $file=$request->file('avatar');
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility');
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
+            
+            // Load the image
+            
+            $image = Image::read(Storage::disk('public')->path($routeImage));
+            
+            // Generate QR code
+            $qrCode = QrCode::size(100)->generate($contact->name);
+    
+            // Insert the QR code to the bottom-left corner of the image
+            $image->insert($qrCode, 'bottom-left', 10, 10);
+            
+            // Save the image
+            $image->save(Storage::disk('public')->path($routeImage));
+            
             $data['avatar'] = $routeImage;
-            if($contact->avatar){
+            
+            if ($contact->avatar) {
                 Storage::disk('public')->delete($contact->avatar);
             }
         }
+        
         $data['user_id'] = Auth::user()->id;
-        //dd($data);
         $contact->update($data);
-        //$contact = Contact::create($data);
         return to_route('contact.edit', $contact);
-//        return redirect()->route('contact.edit', $contact);  
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -97,6 +115,5 @@ class ContactController extends Controller
             Storage::disk('public')->delete($contact->avatar);
         }
         $contact->delete();
-        return redirect()->route('contact.index');
     }
 }
