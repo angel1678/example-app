@@ -36,14 +36,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('dashboard')->group(function () {
+Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::get('contacts',[ContactController::class, 'index'])->name('contact.index');
     Route::get('contacts/create',[ContactController::class, 'create'])->name('contact.create');
     Route::post('contacts',[ContactController::class, 'store'])->name('contact.store');
-    Route::get('contacts/{id}',[ContactController::class, 'show'])->name('contact.show');
-    Route::get('contacts/{id}/edit',[ContactController::class, 'edit'])->name('contact.edit');
-    Route::put('contacts/{id}',[ContactController::class, 'update'])->name('contact.update');
-    Route::delete('contacts/{id}',[ContactController::class, 'destroy'])->name('contact.destroy');
+    Route::get('contacts/{contact}/edit',[ContactController::class, 'edit'])->name('contact.edit');
+    Route::post('contacts/{contact}',[ContactController::class, 'update'])->name('contact.update');
+    Route::delete('contacts/{contact}',[ContactController::class, 'destroy'])->name('contact.destroy');
+    Route::get('contacts/{contact}',[ContactController::class, 'show'])->name('contact.show');
+
 });
 
 require __DIR__.'/auth.php';

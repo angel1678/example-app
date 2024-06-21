@@ -4,9 +4,10 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import { Transition } from '@headlessui/react';
 const Edit = ({auth, contact}) => {
+    console.log(contact)
     const initialValues = {
         name: contact.name,
         phone: contact.phone,
@@ -15,14 +16,25 @@ const Edit = ({auth, contact}) => {
         description: contact.description,
         visibility: contact.visibility
     } 
-    const {data, errors, setData, post} = useForm({
+    const {data, errors, setData, post, recentlySuccessful} = useForm({
         initialValues
     })
+    useEffect(() => {
+        setData({
+            name: contact.name,
+            phone: contact.phone,
+            avatar: null,
+            email: contact.email,
+            description: contact.description,
+            visibility: contact.visibility
+        });
+    }, [contact]);
     const submit = (e) => {
         e.preventDefault();
-        post(route('contact.store'))
+        post(route('contact.update', contact))
         //console.log(data);
     }
+
   return (
     <AuthenticatedLayout
     user={auth.user}
@@ -40,6 +52,17 @@ const Edit = ({auth, contact}) => {
             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div className="p-6 text-gray-900">
                     <form onSubmit={submit}>
+
+                    <Transition
+                        show={recentlySuccessful}
+                        enter="transition ease-in-out"
+                        enterFrom="opacity-0"
+                        leave="transition ease-in-out"
+                        leaveTo="opacity-0"
+                    >
+                        <p className="text-sm text-green-600 text-center">Usuario Actualizado.</p>
+                    </Transition>
+
                     <div>
                         <InputLabel htmlFor="name" value="Nombre" />
 
@@ -116,7 +139,8 @@ const Edit = ({auth, contact}) => {
                         </div>            
                         <div>
                         <InputLabel htmlFor="visibility" value="visibility" />
-                            <select name="" id="" 
+                            <select name="visibility" id="visibility" 
+                            defaultValue={contact.visibility}
                             onChange={(e) => setData('visibility', e.target.value)}
                             className="border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="public">Public</option>
@@ -127,7 +151,7 @@ const Edit = ({auth, contact}) => {
                         <div className="flex justify-center">
                         <PrimaryButton>
                             Actualizar Contacto
-                            </PrimaryButton>          
+                        </PrimaryButton>          
 
                         </div>
 

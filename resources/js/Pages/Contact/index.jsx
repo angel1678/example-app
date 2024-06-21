@@ -59,7 +59,8 @@ const index = ({auth, contacts}) => {
                                 </td>
                                 <td className="space-x-5 px-6 py-4">
                                     <Link href={route("contact.edit", contact.id)}>editar</Link>
-                                    <Link href={route("contact.destroy", contact.id)}>eliminar</Link>
+                                    <Link href={route("contact.destroy", contact.id)}
+                                    method="delete">eliminar</Link>
                                 </td>
                             </tr>
                             ))

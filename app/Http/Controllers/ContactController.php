@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Contact\StoreRquest;
+use App\Http\Requests\Contact\UpdateRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 class ContactController extends Controller
 {
     /**
@@ -59,15 +62,30 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
+        //dd($contact);
         return Inertia::render('Contact/edit', compact('contact'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contact $contact)
+    public function update(UpdateRequest $request, Contact $contact)
     {
-        //
+        $data =$request->only('name','email','phone','description', 'visibility');
+        if($request->hasFile('avatar')){
+            $file=$request->file('avatar');
+            $routeImage = $file->store('avatars', ['disk' => 'public']);
+            $data['avatar'] = $routeImage;
+            if($contact->avatar){
+                Storage::disk('public')->delete($contact->avatar);
+            }
+        }
+        $data['user_id'] = Auth::user()->id;
+        //dd($data);
+        $contact->update($data);
+        //$contact = Contact::create($data);
+        return to_route('contact.edit', $contact);
+//        return redirect()->route('contact.edit', $contact);  
     }
 
     /**
@@ -75,6 +93,10 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        if($contact->avatar){
+            Storage::disk('public')->delete($contact->avatar);
+        }
+        $contact->delete();
+        return redirect()->route('contact.index');
     }
 }
