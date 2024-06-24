@@ -26,6 +26,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/api/contact/{id}', [ContactController::class, 'show'])->name('contact.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -58,7 +58,9 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        //
+        //$contact = Contact::findOrFail($contact);
+        //return response()->json($contact);
+        return Inertia::render('Contact/onepage', compact('contact'));
     }
 
     /**
@@ -75,42 +77,42 @@ class ContactController extends Controller
      */
     public function update(UpdateRequest $request, Contact $contact)
     {
-        $data = $request->only('name', 'email', 'phone', 'description', 'visibility');
-    
+        
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility');    
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
             $data['avatar'] = $routeImage;
-    
-            // Generate the QR code as an image and save it temporarily
             $qrCodeContent = QrCode::format('png')->size(100)->generate($contact->name);
             $qrCodePath = storage_path('app/public/temp_qr_code.png');
             file_put_contents($qrCodePath, $qrCodeContent);
-    
-            // Load the avatar image
             $image = Image::read(Storage::disk('public')->path($routeImage));
-    
-            // Load the QR code image
             $qrImage = Image::read($qrCodePath);
-    
-            // Insert the QR code image into the avatar image
             $image->place($qrImage, 'bottom-left', 10, 10);
-    
-            // Save the modified avatar image back to the storage
             $image->save(Storage::disk('public')->path($routeImage));
-    
-            // Clean up the temporary QR code image
-            unlink($qrCodePath);
-    
+            unlink($qrCodePath);    
             if ($contact->avatar) {
                 Storage::disk('public')->delete($contact->avatar);
             }
         }
-    
         $data['user_id'] = Auth::user()->id;
         $contact->update($data);
-    
         return to_route('contact.edit', $contact);
+
+/*
+$data =$request->only('name','email','phone','description', 'visibility');
+if($request->hasFile('avatar')){
+    $file=$request->file('avatar');
+    $routeImage = $file->store('avatars', ['disk' => 'public']);
+    $data['avatar'] = $routeImage;
+    if($contact->avatar){
+        Storage::disk('public')->delete($contact->avatar);
+    }
+}
+$data['user_id'] = Auth::user()->id;
+$contact->update($data);
+return to_route('contact.edit', $contact);  
+*/
     }
     
 
