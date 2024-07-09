@@ -6,6 +6,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import React, { useEffect } from 'react'
 import { Transition } from '@headlessui/react';
+import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { FaEllipsisH, FaFacebook, FaLink, FaLinkedin, FaTrophy, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+
 const Edit = ({auth, contact}) => {
     console.log(contact)
     const initialValues = {
@@ -46,11 +49,111 @@ const Edit = ({auth, contact}) => {
     }
 >
     <Head title="Dashboard" />
+    <Container>
 
+    <Row className="my-4">
+        <Col md={3} className="text-center">
+          <Image
+            src={`/storage/${contact.avatar}`}
+            thumbnail
+            style={{ width: '100%', cursor: 'pointer' }}
+            onClick={() => {
+              // Si deseas mostrar la imagen grande al hacer clic en la miniatura
+              // puedes hacerlo aquí.
+              // setData('avatar', contact.thumbnail); // Esto es un ejemplo, ajusta según tus necesidades
+            }}
+          />
+        </Col>
+        <Col md={9} className="text-center">
+          <Image
+            src={`/storage/${contact.avatar}`}
+            thumbnail
+            style={{ width: '100%' }}
+          />
+        </Col>
+      </Row>
+      <Row className="my-4">
+        <Col md={6} className="text-center">
+          <Button variant="link" href="https://tu-sitio-web.com">
+            <FaLink /> Visita Nuestro Sitio
+          </Button>
+          <div>Nombre del Certificado</div>
+        </Col>
+        <Col md={6}>
+          <Card className="text-center">
+            <Card.Body>
+              <Card.Title>
+                <FaTrophy /> Compartir Credenciales
+              </Card.Title>
+              <Card.Text>
+                Muestra esta credencial en tu red social
+              </Card.Text>
+              <Button variant="outline-primary" className="mr-2">
+                <FaLinkedin />
+              </Button>
+              <Button variant="outline-primary" className="mr-2">
+                <FaFacebook />
+              </Button>
+              <Button variant="outline-primary" className="mr-2">
+                <FaTwitter />
+              </Button>
+              <Button variant="outline-primary" className="mr-2">
+                <FaWhatsapp />
+              </Button>
+              <Button variant="outline-primary">
+                <FaEllipsisH />
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
     <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div className="p-6 text-gray-900">
+
+                <Row className="my-4">
+        <Col className="text-center">
+          <Image src={`/storage/${contact.avatar}`} thumbnail />
+          <Image src={`/storage/${contact.avatar}`} thumbnail className="ml-3" />
+        </Col>
+      </Row>
+      <Row className="my-4">
+        <Col md={8} className="text-center">
+          <Button variant="link" href="https://tu-sitio-web.com">
+            <FaLink /> Visita Nuestro Sitio
+          </Button>
+          <div>Nombre del Certificado</div>
+        </Col>
+        <Col md={4}>
+          <Card className="text-center">
+            <Card.Body>
+              <Card.Title>
+                <FaTrophy /> Compartir Credenciales
+              </Card.Title>
+              <Card.Text>
+                Muestra esta credencial en tu red social
+              </Card.Text>
+              <Button variant="outline-primary" className="mr-2">
+                <FaLinkedin />
+              </Button>
+              <Button variant="outline-primary" className="mr-2">
+                <FaFacebook />
+              </Button>
+              <Button variant="outline-primary" className="mr-2">
+                <FaTwitter />
+              </Button>
+              <Button variant="outline-primary" className="mr-2">
+                <FaWhatsapp />
+              </Button>
+              <Button variant="outline-primary">
+                <FaEllipsisH />
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
                     <form onSubmit={submit}>
 
                     <Transition

@@ -58,6 +58,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
+        //dd($contact);
         //$contact = Contact::findOrFail($contact);
         //return response()->json($contact);
         return Inertia::render('Contact/onepage', compact('contact'));
