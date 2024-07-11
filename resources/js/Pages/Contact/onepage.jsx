@@ -173,7 +173,7 @@ const Edit = ({auth, contact}) => {
                             id="name"
                             type="text"
                             name="name"
-                            placeholder="John Doe"
+                            placeholder="John Doe123"
                             value={data.name}
                             className="mt-1 block w-full"
                             onChange={(e) => setData('name', e.target.value)}
