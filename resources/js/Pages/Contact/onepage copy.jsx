@@ -6,15 +6,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import React, { useEffect } from 'react'
 import { Transition } from '@headlessui/react';
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
-import { FaEllipsisH, FaFacebook, FaLink, FaLinkedin, FaTrophy, FaTwitter, FaWhatsapp } from 'react-icons/fa';
-import ImageGalleryComponent from '@/Components/ImageGalleryComponent';
 import TopNavbar from '@/Components/Navbar';
+import CredentialImage from '@/Components/CredentialImage';
 import CredentialDetails from '@/Components/CredentialDetails';
-import IssuerInfo from '@/Components/IssuerInfo';
-import Footer from '@/Components/Footer';
 import ShareCredentials from '@/Components/ShareCredentials';
-
+import Footer from '@/Components/Footer';
+import { Col, Container, Image, Row } from 'react-bootstrap';
 const Edit = ({auth, contact}) => {
     console.log(contact)
     const initialValues = {
@@ -54,123 +51,38 @@ const Edit = ({auth, contact}) => {
     </div>
     }
 >
-    <Head title="Dashboard" />
-    <Container>
-    <TopNavbar />
+<TopNavbar />
             <Container className="mt-4">
-                <Row>
-                    <Col md={4}>
-                    <ImageGalleryComponent images={images} />
+            <Row>
+                    <Col md={3}>
+                        <Image src={`/storage/${contact.avatar}`} thumbnail className="mb-2" />
+                        <Image src={`/storage/${contact.avatar}`} thumbnail />
                     </Col>
-                    <Col md={8}>
-
+                    <Col md={9}>
+                        <CredentialDetails
+                            title="Diplomado en Alta Gerencia Hospitalaria"
+                            name={contact.name}
+                            issuedDate="8 de abril de 2024"
+                            skills={['Analisis Crítico', 'Gerencia', 'Administración']}
+                        />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={9}>
+                        <ShareCredentials />
                     </Col>
                 </Row>
             </Container>
             <Footer />
-    <Row className="my-4">
-        <Col md={3} className="text-center">
-          <Image
-            src={`/storage/${contact.avatar}`}
-            thumbnail
-            style={{ width: '100%', cursor: 'pointer' }}
-            onClick={() => {
-              // Si deseas mostrar la imagen grande al hacer clic en la miniatura
-              // puedes hacerlo aquí.
-              // setData('avatar', contact.thumbnail); // Esto es un ejemplo, ajusta según tus necesidades
-            }}
-          />
-        </Col>
-        <Col md={9} className="text-center">
-          <Image
-            src={`/storage/${contact.avatar}`}
-            thumbnail
-            style={{ width: '100%' }}
-          />
-        </Col>
-      </Row>
-      <Row className="my-4">
-        <Col md={6} className="text-center">
-          <Button variant="link" href="https://tu-sitio-web.com">
-            <FaLink /> Visita Nuestro Sitio
-          </Button>
-          <div>Nombre del Certificado</div>
-        </Col>
-        <Col md={6}>
-          <Card className="text-center">
-            <Card.Body>
-              <Card.Title>
-                <FaTrophy /> Compartir Credenciales
-              </Card.Title>
-              <Card.Text>
-                Muestra esta credencial en tu red social
-              </Card.Text>
-              <Button variant="outline-primary" className="mr-2">
-                <FaLinkedin />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaFacebook />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaTwitter />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaWhatsapp />
-              </Button>
-              <Button variant="outline-primary">
-                <FaEllipsisH />
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+            <Head title="Dashboard" />
+
+
+
     <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div className="p-6 text-gray-900">
-
-                <Row className="my-4">
-        <Col className="text-center">
-          <Image src={`/storage/${contact.avatar}`} thumbnail />
-          <Image src={`/storage/${contact.avatar}`} thumbnail className="ml-3" />
-        </Col>
-      </Row>
-      <Row className="my-4">
-        <Col md={8} className="text-center">
-          <Button variant="link" href="https://tu-sitio-web.com">
-            <FaLink /> Visita Nuestro Sitio
-          </Button>
-          <div>Nombre del Certificado</div>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center">
-            <Card.Body>
-              <Card.Title>
-                <FaTrophy /> Compartir Credenciales
-              </Card.Title>
-              <Card.Text>
-                Muestra esta credencial en tu red social
-              </Card.Text>
-              <Button variant="outline-primary" className="mr-2">
-                <FaLinkedin />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaFacebook />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaTwitter />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaWhatsapp />
-              </Button>
-              <Button variant="outline-primary">
-                <FaEllipsisH />
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+                
                     <form onSubmit={submit}>
 
                     <Transition
@@ -270,7 +182,7 @@ const Edit = ({auth, contact}) => {
                         </div>   
                         <div className="flex justify-center">
                         <PrimaryButton>
-                            Actualizar Contacto
+                            Actualizar Contactowewww
                         </PrimaryButton>          
 
                         </div>

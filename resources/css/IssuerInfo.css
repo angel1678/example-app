@@ -1,0 +1,6 @@
+/* resources/css/IssuerInfo.css */
+.issuer-info-card .issuer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px; /* Ajusta este valor para controlar el espacio entre el texto y el ícono */
+  }

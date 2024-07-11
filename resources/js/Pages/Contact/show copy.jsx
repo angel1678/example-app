@@ -6,16 +6,17 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import React, { useEffect } from 'react'
 import { Transition } from '@headlessui/react';
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
-import { FaEllipsisH, FaFacebook, FaLink, FaLinkedin, FaTrophy, FaTwitter, FaWhatsapp } from 'react-icons/fa';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Image from 'react-bootstrap/Image';
+import Row from 'react-bootstrap/Row';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Card } from 'react-bootstrap';
+import { FaLink, FaTrophy, FaLinkedin, FaFacebook, FaTwitter, FaWhatsapp, FaEllipsisH } from 'react-icons/fa';
 import ImageGalleryComponent from '@/Components/ImageGalleryComponent';
-import TopNavbar from '@/Components/Navbar';
-import CredentialDetails from '@/Components/CredentialDetails';
-import IssuerInfo from '@/Components/IssuerInfo';
-import Footer from '@/Components/Footer';
-import ShareCredentials from '@/Components/ShareCredentials';
 
-const Edit = ({auth, contact}) => {
+const Show = ({auth, contact}) => {
     console.log(contact)
     const initialValues = {
         name: contact.name,
@@ -28,11 +29,13 @@ const Edit = ({auth, contact}) => {
     const {data, errors, setData, post, recentlySuccessful} = useForm({
         initialValues
     })
+    const images = [contact.avatar, 'image3.jpg', contact.avatar]; // Agrega las imágenes que quieras
+
     useEffect(() => {
         setData({
             name: contact.name,
             phone: contact.phone,
-            avatar: null,
+            avatar: contact.avatar,
             email: contact.email,
             description: contact.description,
             visibility: contact.visibility
@@ -43,7 +46,7 @@ const Edit = ({auth, contact}) => {
         post(route('contact.update', contact))
         //console.log(data);
     }
-
+    if (!contact) return <div>Loading...</div>;
   return (
     <AuthenticatedLayout
     user={auth.user}
@@ -56,95 +59,54 @@ const Edit = ({auth, contact}) => {
 >
     <Head title="Dashboard" />
     <Container>
-    <TopNavbar />
-            <Container className="mt-4">
                 <Row>
-                    <Col md={4}>
+                    <Col>
                     <ImageGalleryComponent images={images} />
                     </Col>
-                    <Col md={8}>
-
-                    </Col>
                 </Row>
-            </Container>
-            <Footer />
-    <Row className="my-4">
-        <Col md={3} className="text-center">
-          <Image
-            src={`/storage/${contact.avatar}`}
-            thumbnail
-            style={{ width: '100%', cursor: 'pointer' }}
-            onClick={() => {
-              // Si deseas mostrar la imagen grande al hacer clic en la miniatura
-              // puedes hacerlo aquí.
-              // setData('avatar', contact.thumbnail); // Esto es un ejemplo, ajusta según tus necesidades
-            }}
-          />
-        </Col>
-        <Col md={9} className="text-center">
-          <Image
-            src={`/storage/${contact.avatar}`}
-            thumbnail
-            style={{ width: '100%' }}
-          />
-        </Col>
-      </Row>
-      <Row className="my-4">
-        <Col md={6} className="text-center">
-          <Button variant="link" href="https://tu-sitio-web.com">
-            <FaLink /> Visita Nuestro Sitio
-          </Button>
-          <div>Nombre del Certificado</div>
-        </Col>
-        <Col md={6}>
-          <Card className="text-center">
-            <Card.Body>
-              <Card.Title>
-                <FaTrophy /> Compartir Credenciales
-              </Card.Title>
-              <Card.Text>
-                Muestra esta credencial en tu red social
-              </Card.Text>
-              <Button variant="outline-primary" className="mr-2">
-                <FaLinkedin />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaFacebook />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaTwitter />
-              </Button>
-              <Button variant="outline-primary" className="mr-2">
-                <FaWhatsapp />
-              </Button>
-              <Button variant="outline-primary">
-                <FaEllipsisH />
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                </Container>
     <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div className="p-6 text-gray-900">
 
+                <Container>
+                <Row>
+                    <Col>
+                    <ImageGalleryComponent images={images} />
+                    </Col>
+                </Row>
                 <Row className="my-4">
-        <Col className="text-center">
-          <Image src={`/storage/${contact.avatar}`} thumbnail />
-          <Image src={`/storage/${contact.avatar}`} thumbnail className="ml-3" />
-        </Col>
-      </Row>
-      <Row className="my-4">
-        <Col md={8} className="text-center">
-          <Button variant="link" href="https://tu-sitio-web.com">
-            <FaLink /> Visita Nuestro Sitio
-          </Button>
-          <div>Nombre del Certificado</div>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center">
+                    <Col md={6} className="text-center">
+                    <Image
+                        src={`/storage/${contact.thumbnail}`}
+                        thumbnail
+                        style={{ width: '100%', cursor: 'pointer' }}
+                        onClick={() => {
+                        // Si deseas mostrar la imagen grande al hacer clic en la miniatura
+                        // puedes hacerlo aquí.
+                        // setData('avatar', contact.thumbnail); // Esto es un ejemplo, ajusta según tus necesidades
+                        }}
+                    />
+                    </Col>
+                    <Col md={6} className="text-center">
+                    <Image
+                        src={`/storage/${contact.avatar}`}
+                        thumbnail
+                        style={{ width: '100%' }}
+                    />
+                    </Col>
+                </Row>
+
+                <Row className="my-4">
+                    <Col md={6} className="text-center">
+                    <button variant="link" href={contact.website_url}>
+            <Link /> Visita Nuestro Sitio
+          </button>
+          <div>{contact.certificate_name}</div>
+                    </Col>
+                    <Col md={6}>
+                    <Card className="text-center">
             <Card.Body>
               <Card.Title>
                 <FaTrophy /> Compartir Credenciales
@@ -168,9 +130,43 @@ const Edit = ({auth, contact}) => {
                 <FaEllipsisH />
               </Button>
             </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+          </Card>            
+                    </Col>
+                </Row>
+
+
+                <Row>
+                    <Col xs={6} md={4}>
+                    <Image src={`/storage/${contact.avatar}`} rounded />
+                    </Col>
+                    <Col xs={6} md={4}>
+                    <Image src={`/storage/${contact.avatar}`} roundedCircle />
+                    </Col>
+                    <Col xs={6} md={4}>
+                    <Image src={`/storage/${contact.avatar}`} thumbnail />
+                    </Col>
+                </Row>
+                </Container>
+
+                <ListGroup>
+                    <ListGroup.Item>Cras justo odio</ListGroup.Item>
+                    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+                    <ListGroup.Item>Morbi leo risus</ListGroup.Item>
+                    <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+                    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                </ListGroup>
+
+                <img src={`/storage/${contact.avatar}`} alt={`Avatar of ${contact.name}`} />
+            <h1>{contact.name}</h1>
+            <p>{contact.description}</p>
+            <p>{contact.email}</p>
+            <p>{contact.phone}</p>
+            <div className="share-buttons">
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} target="_blank" rel="noopener noreferrer">Share on Facebook</a>
+                <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}`} target="_blank" rel="noopener noreferrer">Share on LinkedIn</a>
+                <a href={`https://twitter.com/share?url=${window.location.href}&text=${contact.name}`} target="_blank" rel="noopener noreferrer">Share on Twitter</a>
+                <a href={`https://wa.me/?text=${window.location.href}`} target="_blank" rel="noopener noreferrer">Share on WhatsApp</a>
+            </div>
                     <form onSubmit={submit}>
 
                     <Transition
@@ -284,4 +280,4 @@ const Edit = ({auth, contact}) => {
   )
 }
 
-export default Edit
+export default Show

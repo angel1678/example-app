@@ -1,0 +1,8 @@
+/* resources/css/ImageGalleryComponent.css */
+.image-gallery-wrapper {
+    padding-top: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    margin: 0 auto; /* Centrará el contenedor */
+    max-width: 80%; /* Ocupa el 40% del ancho de la pantalla */
+}
