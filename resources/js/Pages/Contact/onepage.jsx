@@ -44,7 +44,7 @@ const Edit = ({auth, contact}) => {
     header={
     <div className="flex justify-between">
     <h2 className="font-semibold text-xl text-gray-800 leading-tight">Actualizar Contacto</h2>
-    <Link href={route('contact.index')} >Contactos</Link>
+    <Link href={route('contact.index')} >Contactos123</Link>
     </div>
     }
 >
