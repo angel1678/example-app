@@ -6,8 +6,8 @@ import '../../css/ImageGalleryComponent.css'; // Importa tu archivo CSS personal
 
 const ImageGalleryComponent = ({ images }) => {
   const galleryImages = images.map((image) => ({
-    original: `/storage/avatars/${image}`,
-    thumbnail: `/storage/avatars/${image}`,
+    original: `/storage/${image}`,
+    thumbnail: `/storage/${image}`,
   }));
 
   return (

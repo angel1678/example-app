@@ -10,7 +10,7 @@ const IssuerInfo = () => {
       <Card.Body>
         <Card.Title className="text-center">Más información sobre el emisor</Card.Title>
         <div className="d-flex align-items-center justify-content-center my-3">
-          <img src="/path/to/emisor-logo.png" alt="Issuer Logo" className="mr-2" width="50" height="50" />
+          <img src="/storage/avatars/emisor-logo.png" alt="Issuer Logo" className="mr-2" width="50" height="50" />
           <span>InconGroup Academy</span>
         </div>
         <div className="text-center">
