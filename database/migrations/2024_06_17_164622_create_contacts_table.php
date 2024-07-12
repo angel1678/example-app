@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string("email")->nullable();
             $table->string("description")->nullable();
             $table->enum("visibility", ["private", "public"])->default("public");
+            $table->string("detallename");
+            $table->json('skills')->nullable();
             $table->foreignid("user_id")->constrained();
             $table->timestamps();
         });

@@ -5,14 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Contact\StoreRquest;
 use App\Http\Requests\Contact\UpdateRequest;
 use App\Models\Contact;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+use Inertia\Inertia;
 use Intervention\Image\Laravel\Facades\Image;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ContactController extends Controller
 {
@@ -31,6 +28,7 @@ class ContactController extends Controller
      */
     public function create()
     {
+
         return Inertia::render('Contact/create');
     }
 
@@ -39,9 +37,18 @@ class ContactController extends Controller
      */
     public function store(StoreRquest $request)
     {
-        $data =$request->only('name','email','phone','description', 'visibility');
-        if($request->hasFile('avatar')){
-            $file=$request->file('avatar');
+/*
+$request->validate([
+'name' => 'required|string|max:255',
+'phone' => 'required|string|max:255',
+'email' => 'required|email|max:255',
+'skills' => 'array', // Validar que sea un array
+'skills.*' => 'string|max:255', // Validar cada habilidad
+]);
+ */
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills');
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
             $data['avatar'] = $routeImage;
         }
@@ -49,7 +56,7 @@ class ContactController extends Controller
         //dd($data);
         Contact::create($data);
         //$contact = Contact::create($data);
-        return redirect()->route('contact.index');  
+        return redirect()->route('contact.index');
 
     }
 
@@ -78,8 +85,8 @@ class ContactController extends Controller
      */
     public function update(UpdateRequest $request, Contact $contact)
     {
-        
-        $data = $request->only('name', 'email', 'phone', 'description', 'visibility');    
+
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills');
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
@@ -91,7 +98,7 @@ class ContactController extends Controller
             $qrImage = Image::read($qrCodePath);
             $image->place($qrImage, 'bottom-left', 10, 10);
             $image->save(Storage::disk('public')->path($routeImage));
-            unlink($qrCodePath);    
+            unlink($qrCodePath);
             if ($contact->avatar) {
                 Storage::disk('public')->delete($contact->avatar);
             }
@@ -103,26 +110,25 @@ class ContactController extends Controller
 /*
 $data =$request->only('name','email','phone','description', 'visibility');
 if($request->hasFile('avatar')){
-    $file=$request->file('avatar');
-    $routeImage = $file->store('avatars', ['disk' => 'public']);
-    $data['avatar'] = $routeImage;
-    if($contact->avatar){
-        Storage::disk('public')->delete($contact->avatar);
-    }
+$file=$request->file('avatar');
+$routeImage = $file->store('avatars', ['disk' => 'public']);
+$data['avatar'] = $routeImage;
+if($contact->avatar){
+Storage::disk('public')->delete($contact->avatar);
+}
 }
 $data['user_id'] = Auth::user()->id;
 $contact->update($data);
-return to_route('contact.edit', $contact);  
-*/
+return to_route('contact.edit', $contact);
+ */
     }
-    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Contact $contact)
     {
-        if($contact->avatar){
+        if ($contact->avatar) {
             Storage::disk('public')->delete($contact->avatar);
         }
         $contact->delete();

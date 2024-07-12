@@ -6,3 +6,9 @@
     margin: 0 auto; /* Centrará el contenedor */
     max-width: 80%; /* Ocupa el 40% del ancho de la pantalla */
 }
+/* Añade tus estilos personalizados aquí */
+.image-gallery {
+    padding: 30px;
+    width: 40%;
+    margin: 0 auto; /* Centra la galería horizontalmente */
+  }

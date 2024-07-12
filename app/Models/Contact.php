@@ -15,6 +15,11 @@ class Contact extends Model
         'description',
         'avatar',
         'visibility',
+        'detallename',
+        'skills',
         'user_id'
+    ];
+    protected $casts = [
+        'skills' => 'array',
     ];
 }

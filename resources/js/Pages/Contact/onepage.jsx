@@ -22,6 +22,7 @@ import CredentialDetails from "@/Components/CredentialDetails";
 import IssuerInfo from "@/Components/IssuerInfo";
 import Footer from "@/Components/Footer";
 import ShareCredentials from "@/Components/ShareCredentials";
+import '../../../css/onepage.css';
 
 const Edit = ({ auth, contact }) => {
     console.log(contact);
@@ -32,10 +33,13 @@ const Edit = ({ auth, contact }) => {
         email: contact.email,
         description: contact.description,
         visibility: contact.visibility,
+        skills: contact.skills,
     };
     const { data, errors, setData, post, recentlySuccessful } = useForm({
         initialValues,
     });
+    const skills = typeof contact.skills === 'string' ? JSON.parse(contact.skills) : contact.skills;
+
     useEffect(() => {
         setData({
             name: contact.name,
@@ -44,6 +48,7 @@ const Edit = ({ auth, contact }) => {
             email: contact.email,
             description: contact.description,
             visibility: contact.visibility,
+            skills: contact.skills,
         });
     }, [contact]);
 
@@ -79,12 +84,20 @@ const Edit = ({ auth, contact }) => {
                                         title="Diplomado en Alta Gerencia Hospitalaria"
                                         name={contact.name}
                                         issuedDate="8 de abril de 2024"
-                                        skills={[
-                                            "Analisis Crítico",
-                                            "Gerencia",
-                                            "Administración",
-                                        ]}
+                                        skills={contact.skills}
+                                        selectedImage={`/storage/${contact.avatar}`} // Pasa la URL de la imagen seleccionada
                                     />
+                                                    <div className="skills-container">
+                    {skills.map((skill, index) => (
+                        <button
+                            key={index}
+                            type="button"
+                            className="skill-button"
+                        >
+                            {skill}
+                        </button>
+                    ))}
+                </div>
                                 </Col>
                                 <Col md={4}>
                                     <ShareCredentials />
