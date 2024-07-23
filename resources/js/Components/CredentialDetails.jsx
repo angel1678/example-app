@@ -45,6 +45,9 @@ const CredentialDetails = ({ title, name, issuedDate, skills, selectedImage }) =
           </Button>
         </div>
         <h2>{title}</h2>
+        <Button variant="primary" className="issuer-link d-flex align-items-center" onClick={downloadPDF}>
+        <FaFilePdf className="ml-2" /> PDF
+          </Button>
         <p>{name}</p>
         <hr />
         <p>Emitido el {issuedDate}</p>
@@ -58,9 +61,7 @@ const CredentialDetails = ({ title, name, issuedDate, skills, selectedImage }) =
             </span>
           ))}
         </div>
-        <Button variant="primary" className="issuer-link d-flex align-items-center" onClick={downloadPDF}>
-        <FaFilePdf className="ml-2" /> PDF
-          </Button>
+
       </div>
   );
 }
