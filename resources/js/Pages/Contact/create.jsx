@@ -4,6 +4,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import React from "react";
 
 const Create = ({ auth }) => {
@@ -16,6 +18,8 @@ const Create = ({ auth }) => {
         visibility: "",
         detallename: "",
         skills: [],
+        emitidaEn: null,
+        prescribeEl: "",
     };
     const { data, errors, setData, post } = useForm({
         initialValues,
@@ -253,6 +257,25 @@ const Create = ({ auth }) => {
                                         </option>
                                     </select>
                                 </div>
+
+                                <div>
+                <label>Emitida en</label>
+                <DatePicker
+                    selected={data.emitidaEn}
+                    onChange={(date) => setEmitidaEn(date)}
+                    dateFormat="d 'de' MMMM 'de' yyyy"
+                    placeholderText="Selecciona una fecha"
+                />
+            </div>
+            <div>
+                <label>Prescribe el</label>
+                <input
+                    type="text"
+                    value={data.prescribeEl}
+                    onChange={(e) => setPrescribeEl(e.target.value)}
+                    placeholder="Ingresa una fecha o 'No caduca'"
+                />
+            </div>
 
                                 <div className="flex justify-center">
                                     <PrimaryButton>

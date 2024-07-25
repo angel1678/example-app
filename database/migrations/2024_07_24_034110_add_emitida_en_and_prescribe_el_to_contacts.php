@@ -9,19 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('contacts', function (Blueprint $table) {
-            if (!Schema::hasColumn('contacts', 'skills')) {
-                $table->json('skills')->nullable();
-            }
+            $table->date('emitida_en')->nullable();
+            $table->string('prescribe_el')->nullable();
         });
     }
-    
-    public function down()
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->dropColumn('skills');
+            $table->dropColumn('emitida_en');
+            $table->dropColumn('prescribe_el');
         });
     }
 };
