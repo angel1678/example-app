@@ -17,6 +17,8 @@ class Contact extends Model
         'visibility',
         'detallename',
         'skills',
+        'emitida_en', 
+        'prescribe_el',
         'user_id'
     ];
     protected $casts = [

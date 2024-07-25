@@ -18,16 +18,18 @@ const Create = ({ auth }) => {
         visibility: "",
         detallename: "",
         skills: [],
-        emitidaEn: null,
-        prescribeEl: "",
+        emitida_en: null, 
+        prescribe_el: "",
     };
+    //const [startDate, setStartDate] = useState(new Date());
     const { data, errors, setData, post } = useForm({
         initialValues,
     });
     const submit = (e) => {
         e.preventDefault();
+        console.log(data);
         post(route("contact.store"));
-        //console.log(data);
+
     };
 
     const handleChange = (e) => {
@@ -40,12 +42,27 @@ const Create = ({ auth }) => {
                 ...data,
                 [name]: selectedSkills,
             });
-        } else {
+        } else if (name === "emitida_en") {
+            setData({
+                ...data,
+                emitida_en: value ? value.toISOString().split('T')[0] : null,
+            });
+        }
+        else {
             setData({
                 ...data,
                 [name]: value,
+
             });
         }
+    };
+
+    const handleDateChange = (date) => {
+        console.log(date);
+        setData({
+            ...data,
+            emitida_en: date,
+        });
     };
 
     const handleSubmit = (e) => {
@@ -261,21 +278,41 @@ const Create = ({ auth }) => {
                                 <div>
                 <label>Emitida en</label>
                 <DatePicker
-                    selected={data.emitidaEn}
-                    onChange={(date) => setEmitidaEn(date)}
-                    dateFormat="d 'de' MMMM 'de' yyyy"
+                    selected={data.emitida_en}
+                    onChange={handleDateChange}
+                    dateFormat="dd 'de' MMMM 'de' yyyy"
                     placeholderText="Selecciona una fecha"
                 />
             </div>
+
             <div>
-                <label>Prescribe el</label>
-                <input
-                    type="text"
-                    value={data.prescribeEl}
-                    onChange={(e) => setPrescribeEl(e.target.value)}
-                    placeholder="Ingresa una fecha o 'No caduca'"
-                />
-            </div>
+                                    <InputLabel
+                                        htmlFor="prescribe_el"
+                                        value="Nombre"
+                                    />
+
+                                    <TextInput
+                                        id="prescribe_el"
+                                        type="text"
+                                        name="prescribe_el"
+                                        placeholder="Ingresa una fecha o 'No caduca"
+                                        value={data.prescribe_el}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData(
+                                                "prescribe_el",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.prescribe_el}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+
 
                                 <div className="flex justify-center">
                                     <PrimaryButton>

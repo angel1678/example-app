@@ -4,10 +4,12 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import React, { useEffect } from "react";
 import { Transition } from "@headlessui/react";
 const Edit = ({ auth, contact }) => {
-    console.log(contact);
+    //console.log(contact);
     const initialValues = {
         name: contact.name,
         phone: contact.phone,
@@ -17,6 +19,8 @@ const Edit = ({ auth, contact }) => {
         visibility: contact.visibility,
         detallename: contact.detallename,
         skills: contact.skills,
+        emitida_en: contact.emitida_en, 
+        prescribe_el: contact.prescribe_el,
     };
     const { data, errors, setData, post, recentlySuccessful } = useForm({
         initialValues,
@@ -31,6 +35,8 @@ const Edit = ({ auth, contact }) => {
             visibility: contact.visibility,
             detallename: contact.detallename,
             skills: contact.skills,
+            emitida_en: contact.emitida_en, 
+            prescribe_el: contact.prescribe_el,
         });
     }, [contact]);
     const submit = (e) => {
@@ -38,6 +44,16 @@ const Edit = ({ auth, contact }) => {
         post(route("contact.update", contact));
         //console.log(data);
     };
+
+    const handleDateChange = (date) => {
+        //console.log('adddddddddd');
+        //console.log(date);
+        setData({
+            ...data,
+            emitida_en: date,
+        });
+    };
+
     const handleChange = (e) => {
         const { name, value, options } = e.target;
         if (name === "skills") {
@@ -48,7 +64,13 @@ const Edit = ({ auth, contact }) => {
                 ...data,
                 [name]: selectedSkills,
             });
-        } else {
+        } else if (name === "emitida_en") {
+            setData({
+                ...data,
+                emitida_en: value ? value.toISOString().split('T')[0] : null,
+            });
+        } 
+        else {
             setData({
                 ...data,
                 [name]: value,
@@ -277,6 +299,45 @@ const Edit = ({ auth, contact }) => {
                                         </option>
                                     </select>
                                 </div>
+
+                                <div>
+                <label>Emitida en</label>
+                <DatePicker
+                    selected={data.emitida_en}
+                    onChange={handleDateChange}
+                    dateFormat="dd 'de' MMMM 'de' yyyy"
+                    placeholderText="Selecciona una fecha"
+                />           
+
+            </div>
+
+            <div>
+                                    <InputLabel
+                                        htmlFor="prescribe_el"
+                                        value="Nombre"
+                                    />
+
+                                    <TextInput
+                                        id="prescribe_el"
+                                        type="text"
+                                        name="prescribe_el"
+                                        placeholder="Ingresa una fecha o 'No caduca"
+                                        value={data.prescribe_el}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData(
+                                                "prescribe_el",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.prescribe_el}
+                                        className="mt-2"
+                                    />
+                                </div>
+
 
                                 <div className="flex justify-center">
                                     <PrimaryButton>

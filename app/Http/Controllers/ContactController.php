@@ -46,11 +46,14 @@ $request->validate([
 'skills.*' => 'string|max:255', // Validar cada habilidad
 ]);
  */
-        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills');
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills', 'emitida_en', 'prescribe_el');
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
             $data['avatar'] = $routeImage;
+        }
+        if (!empty($data['emitida_en'])) {
+            $data['emitida_en'] = date('Y-m-d', strtotime($data['emitida_en']));
         }
         $data['user_id'] = Auth::user()->id;
         //dd($data);
@@ -86,7 +89,7 @@ $request->validate([
     public function update(UpdateRequest $request, Contact $contact)
     {
 
-        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills');
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills', 'emitida_en', 'prescribe_el');
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
@@ -102,6 +105,11 @@ $request->validate([
             if ($contact->avatar) {
                 Storage::disk('public')->delete($contact->avatar);
             }
+        }
+        //dd('qwe');
+        //dd($data['emitida_en']);
+        if (!empty($data['emitida_en'])) {
+            $data['emitida_en'] = date('Y-m-d', strtotime($data['emitida_en']));
         }
         $data['user_id'] = Auth::user()->id;
         $contact->update($data);
