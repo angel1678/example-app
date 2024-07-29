@@ -23,5 +23,6 @@ class Contact extends Model
     ];
     protected $casts = [
         'skills' => 'array',
+        'emitida_en' => 'date:m-d-Y',
     ];
 }

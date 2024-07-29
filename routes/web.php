@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Http\Controllers\PublicContactController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +18,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/contact/{id}', [PublicContactController::class, 'show'])->name('public.contact.show');
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

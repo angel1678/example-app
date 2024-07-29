@@ -11,17 +11,18 @@ import { Transition } from "@headlessui/react";
 const Edit = ({ auth, contact }) => {
     //console.log(contact);
     const initialValues = {
-        name: contact.name,
-        phone: contact.phone,
+        name: '',//contact.name,
+        phone: '',//contact.phone,
         avatar: null,
-        email: contact.email,
-        description: contact.description,
-        visibility: contact.visibility,
-        detallename: contact.detallename,
-        skills: contact.skills,
-        emitida_en: contact.emitida_en, 
-        prescribe_el: contact.prescribe_el,
+        email: '',//contact.email,
+        description: '',//contact.description,
+        visibility: '',//contact.visibility,
+        detallename: '',//contact.detallename,
+        skills: '',//contact.skills,
+        emitida_en: '',//contact.emitida_en, 
+        prescribe_el: '',//contact.prescribe_el,
     };
+    console.log(contact.emitida_en); 
     const { data, errors, setData, post, recentlySuccessful } = useForm({
         initialValues,
     });
@@ -302,10 +303,10 @@ const Edit = ({ auth, contact }) => {
 
                                 <div>
                 <label>Emitida en</label>
+
                 <DatePicker
                     selected={data.emitida_en}
                     onChange={handleDateChange}
-                    dateFormat="dd 'de' MMMM 'de' yyyy"
                     placeholderText="Selecciona una fecha"
                 />           
 
