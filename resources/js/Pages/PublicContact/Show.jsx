@@ -46,9 +46,9 @@ return (
                         <Row className="my-4">
                             <Col md={8}>
                                 <CredentialDetails
-                                    title="Diplomado en Alta Gerencia Hospitalaria"
+                                    title={contact.detallename}
                                     name={contact.name}
-                                    issuedDate="8 de abril de 2024"
+                                    issuedDate={contact.emitida_en}
                                     skills={contact.skills}
                                     selectedImage={`/storage/${contact.avatar}`} // Pasa la URL de la imagen seleccionada
                                 />
@@ -73,15 +73,13 @@ return (
                                         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                                             EMITIDA EN
                                         </h2>
-                                        "8 de abril de 2024"
-                                        <p>Emitido el {contact.name}</p>
+                                        <p>{contact.emitida_en}</p>
                                     </Col>
                                     <Col md={6}>
                                         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                                             PRESCRIBE EL
                                         </h2>
-                                        "No caduca"
-                                        <p>Emitido el {contact.name}</p>
+                                        <p>{contact.prescribe_el}</p>
                                     </Col>
                                 </Row>
 
