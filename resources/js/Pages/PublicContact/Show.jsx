@@ -15,6 +15,8 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Card } from "react-bootstrap";
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import {
     FaLink,
     FaTrophy,
@@ -34,6 +36,11 @@ const Show = ({ contact }) => {
     const skills = typeof contact.skills === 'string' ? JSON.parse(contact.skills) : contact.skills;
 
     const images = [contact.avatar, contact.avatar]; // Agrega las imágenes que quieras
+    //const formattedDate = format(contact.emitida_en, "d 'de' MMMM 'de' yyyy", { locale: es });
+    console.log(contact.emitida_en);
+    const prescribeDate = new Date(contact.emitida_en);
+    console.log(prescribeDate);
+    const formattedDate = format(prescribeDate, "d 'de' MMMM 'de' yyyy", { locale: es });
 
 return (
 <div>   
@@ -62,6 +69,8 @@ return (
                                             key={index}
                                             type="button"
                                             className="skill-button"
+
+
                                         >
                                             {skill}
                                         </button>
@@ -73,7 +82,7 @@ return (
                                         <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                                             EMITIDA EN
                                         </h2>
-                                        <p>{contact.emitida_en}</p>
+                                        <p>{formattedDate}</p>
                                     </Col>
                                     <Col md={6}>
                                         <h2 className="font-semibold text-xl text-gray-800 leading-tight">

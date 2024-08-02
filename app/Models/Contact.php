@@ -18,11 +18,17 @@ class Contact extends Model
         'detallename',
         'skills',
         'emitida_en', 
+        'emitida_en2', 
         'prescribe_el',
         'user_id'
     ];
     protected $casts = [
         'skills' => 'array',
         'emitida_en' => 'date:m-d-Y',
+        'emitida_en2' => 'date:Y-m-d H:i:s',
     ];
+    protected function serializeDate($date)
+{
+    return $date->format('Y-m-d H:i:s');
+}
 }

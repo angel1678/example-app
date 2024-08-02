@@ -46,7 +46,7 @@ $request->validate([
 'skills.*' => 'string|max:255', // Validar cada habilidad
 ]);
  */
-        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills', 'emitida_en', 'prescribe_el');
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills', 'emitida_en', 'emitida_en2', 'prescribe_el');
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
@@ -54,6 +54,9 @@ $request->validate([
         }
         if (!empty($data['emitida_en'])) {
             $data['emitida_en'] = date('Y-m-d', strtotime($data['emitida_en']));
+        }
+        if (!empty($data['emitida_en2'])) {
+            $data['emitida_en2'] = date('Y-m-d', strtotime($data['emitida_en2']));
         }
         $data['user_id'] = Auth::user()->id;
         //dd($data);
@@ -99,7 +102,28 @@ $request->validate([
             file_put_contents($qrCodePath, $qrCodeContent);
             $image = Image::read(Storage::disk('public')->path($routeImage));
             $qrImage = Image::read($qrCodePath);
-            $image->place($qrImage, 'bottom-left', 10, 10);
+            $image->text($contact->description, 310, 357, function ($font) {
+                $font->file(public_path('fonts/arial.ttf')); // Usa una fuente válida
+                $font->size(15);
+                $font->color('#000000');
+                $font->align('center');
+                $font->valign('middle');
+            });
+        $image->text($contact->name, 420, 300, function ($font) {
+            $font->file(public_path('fonts/arial.ttf')); // Usa una fuente válida
+            $font->size(23);
+            $font->color('#000000');
+            $font->align('center');
+            $font->valign('middle');
+        });
+        $image->text($contact->detallename, 420, 395, function ($font) {
+            $font->file(public_path('fonts/arial.ttf')); // Usa una fuente válida
+            $font->size(23);
+            $font->color('#000000');
+            $font->align('center');
+            $font->valign('middle');
+        });
+            $image->place($qrImage, 'bottom-right', 30, 30);
             $image->save(Storage::disk('public')->path($routeImage));
             unlink($qrCodePath);
             if ($contact->avatar) {

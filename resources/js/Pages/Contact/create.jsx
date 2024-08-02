@@ -19,6 +19,7 @@ const Create = ({ auth }) => {
         detallename: "",
         skills: [],
         emitida_en: null, 
+        emitida_en2: null, 
         prescribe_el: "",
     };
     //const [startDate, setStartDate] = useState(new Date());
@@ -64,7 +65,13 @@ const Create = ({ auth }) => {
             emitida_en: date,
         });
     };
-
+    const handleDateChange2 = (date) => {
+        console.log(date);
+        setData({
+            ...data,
+            emitida_en2: date,
+        });
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
         // Lógica para enviar el formulario
@@ -280,6 +287,16 @@ const Create = ({ auth }) => {
                 <DatePicker
                     selected={data.emitida_en}
                     onChange={handleDateChange}
+                    dateFormat="dd 'de' MMMM 'de' yyyy"
+                    placeholderText="Selecciona una fecha"
+                />
+            </div>
+
+            <div>
+                <label>Emitida en2</label>
+                <DatePicker
+                    selected={data.emitida_en2}
+                    onChange={handleDateChange2}
                     dateFormat="dd 'de' MMMM 'de' yyyy"
                     placeholderText="Selecciona una fecha"
                 />
