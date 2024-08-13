@@ -3,7 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import React from 'react'
 
 const index = ({auth, contacts}) => {
-    console.log(contacts)
+    //console.log(contacts)
   return (
     <AuthenticatedLayout
     user={auth.user}
@@ -59,8 +59,12 @@ const index = ({auth, contacts}) => {
                                 </td>
                                 <td className="space-x-5 px-6 py-4">
                                     <Link href={route("contact.edit", contact.id)}>editar</Link>
-                                    <Link href={route("contact.destroy", contact.id)}
-                                    method="delete">eliminar</Link>
+                                    <button
+        onClick={() => Inertia.delete(route("contact.destroy", contact.id))}
+        className="text-red-600"
+    >
+        eliminar
+    </button>
                                 </td>
                             </tr>
                             ))

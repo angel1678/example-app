@@ -92,7 +92,7 @@ $request->validate([
     public function update(UpdateRequest $request, Contact $contact)
     {
 
-        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills', 'emitida_en', 'prescribe_el');
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills', 'emitida_en', 'emitida_en2', 'prescribe_el');
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
@@ -134,6 +134,9 @@ $request->validate([
         //dd($data['emitida_en']);
         if (!empty($data['emitida_en'])) {
             $data['emitida_en'] = date('Y-m-d', strtotime($data['emitida_en']));
+        }
+        if (!empty($data['emitida_en2'])) {
+            $data['emitida_en2'] = date('Y-m-d', strtotime($data['emitida_en2']));
         }
         $data['user_id'] = Auth::user()->id;
         $contact->update($data);

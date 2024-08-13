@@ -7,6 +7,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import React from "react";
+import { parseISO, isValid } from 'date-fns';
 
 const Create = ({ auth }) => {
     const initialValues = {
@@ -62,14 +63,20 @@ const Create = ({ auth }) => {
         console.log(date);
         setData({
             ...data,
-            emitida_en: date,
+            //emitida_en: date,
+            emitida_en: typeof date === 'string' 
+            ? parseISO(date) 
+            : date,
         });
     };
     const handleDateChange2 = (date) => {
         console.log(date);
         setData({
             ...data,
-            emitida_en2: date,
+            //emitida_en2: date,
+            emitida_en2: typeof date === 'string' 
+            ? parseISO(date) 
+            : date,
         });
     };
     const handleSubmit = (e) => {
@@ -282,7 +289,7 @@ const Create = ({ auth }) => {
                                     </select>
                                 </div>
 
-                                <div>
+                                {/* <div>
                 <label>Emitida en</label>
                 <DatePicker
                     selected={data.emitida_en}
@@ -300,6 +307,38 @@ const Create = ({ auth }) => {
                     dateFormat="dd 'de' MMMM 'de' yyyy"
                     placeholderText="Selecciona una fecha"
                 />
+            </div> */}
+
+            <div>
+                <label>Emitida en</label>
+                {/* <DatePicker
+                    selected={data.emitida_en}
+                    onChange={handleDateChange}
+                    dateFormat="dd 'de' MMMM 'de' yyyy"
+                    placeholderText="Selecciona una fecha"
+                /> */}
+                                            <DatePicker
+    selected={data.emitida_en ? new Date(data.emitida_en) : null}
+    onChange={handleDateChange}
+    dateFormat="yyyy-MM-dd"
+    placeholderText="Selecciona una fecha"
+/>    
+            </div>
+
+            <div>
+                <label>Emitida en2</label>
+                {/* <DatePicker
+                    selected={data.emitida_en2}
+                    onChange={handleDateChange2}
+                    dateFormat="dd 'de' MMMM 'de' yyyy"
+                    placeholderText="Selecciona una fecha"
+                /> */}
+                                            <DatePicker
+    selected={data.emitida_en2 ? new Date(data.emitida_en2) : null}
+    onChange={handleDateChange2}
+    dateFormat="yyyy-MM-dd"
+    placeholderText="Selecciona una fecha"
+/>    
             </div>
 
             <div>
