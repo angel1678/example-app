@@ -14,14 +14,14 @@ const IssuerInfo = () => {
           <span>InconGroup Academy</span>
         </div>
         <div className="text-center">
-          <Button variant="link" href="https://emisor-website.com" target="_blank" className="issuer-link">
+          <Button variant="link" href="https://moranconsultores.com" target="_blank" className="issuer-link">
             Visita el sitio web del emisor <FaExternalLinkAlt />
           </Button>
         </div>
         <hr />
         <div className="issuer-info-footer">
           <div className="issuer-info-label">Más credenciales del emisor</div>
-          <Button variant="link" href="/todas-las-credenciales" className="issuer-info-link">
+          <Button variant="link" href="https://moranconsultores.com/12-diplomados" className="issuer-info-link">
             Ver todas las credenciales →
           </Button>
         </div>

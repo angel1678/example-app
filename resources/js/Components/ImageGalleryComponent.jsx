@@ -13,7 +13,7 @@ const ImageGalleryComponent = ({ images, onImageSelect }) => {
     onImageSelect(event.target.src);
   };
   return (
-    <div className="image-gallery-wrapper">
+    <div className="py-4 image-gallery-wrapper">
       <ImageGallery
         items={galleryImages}
         thumbnailPosition="left" // Esto moverá las miniaturas a la izquierda

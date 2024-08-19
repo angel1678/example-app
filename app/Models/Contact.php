@@ -21,7 +21,11 @@ class Contact extends Model
         'emitida_en', 
         'emitida_en2', 
         'prescribe_el',
-        'user_id'
+        'user_id',
+        'title',
+        'description1',
+        'image',
+        'url'
     ];
     protected $casts = [
         'skills' => 'array',

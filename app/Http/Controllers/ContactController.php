@@ -59,6 +59,7 @@ $request->validate([
             $data['emitida_en2'] = date('Y-m-d', strtotime($data['emitida_en2']));
         }
         $data['user_id'] = Auth::user()->id;
+        $data['title'] = $data['detallename'] . '.' . $data['name'] . '.' . 'InconGroup Academy';
         //dd($data);
         Contact::create($data);
         //$contact = Contact::create($data);
@@ -91,13 +92,16 @@ $request->validate([
      */
     public function update(UpdateRequest $request, Contact $contact)
     {
-
-        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills', 'emitida_en', 'emitida_en2', 'prescribe_el');
+        //dd($contact);
+        $data = $request->only('name', 'email', 'phone', 'description', 'visibility', 'detallename', 'skills', 'emitida_en', 'emitida_en2', 'prescribe_el', 'title','description1','image','url');
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $routeImage = $file->store('avatars', ['disk' => 'public']);
             $data['avatar'] = $routeImage;
-            $qrCodeContent = QrCode::format('png')->size(100)->generate($contact->name);
+            $image2 = url("/storage/{$routeImage}");
+            $data['image'] = $image2;
+            $url = url("/contact/{$contact->id}");
+            $qrCodeContent = QrCode::format('png')->size(100)->generate($url);
             $qrCodePath = storage_path('app/public/temp_qr_code.png');
             file_put_contents($qrCodePath, $qrCodeContent);
             $image = Image::read(Storage::disk('public')->path($routeImage));
@@ -139,6 +143,18 @@ $request->validate([
             $data['emitida_en2'] = date('Y-m-d', strtotime($data['emitida_en2']));
         }
         $data['user_id'] = Auth::user()->id;
+        
+        //dd($data['name']);
+
+        $data['title'] = $data['detallename'] . ' * ' . $data['name'] . ' * ' . 'InconGroup Academy';
+        $data['description1'] = 'Home of digital credentials';
+        
+        
+        
+        //dd($url);
+        $data['url'] = $url;
+
+        //dd($data['title']);
         $contact->update($data);
         return to_route('contact.edit', $contact);
 
