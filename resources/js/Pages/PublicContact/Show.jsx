@@ -48,6 +48,7 @@ const Show = ({ contact }) => {
 
 return (
     <div>
+        <Head title={contact.title}/>
                  <Helmet>
     <title>{contact.title}</title>
     <meta property="og:title" content={contact.title} />
@@ -110,7 +111,7 @@ return (
 
                             </Col>
                             <Col md={4}>
-                                <ShareCredentials />
+                                <ShareCredentials urllinkedin={contact.url}/>
                                 <IssuerInfo />
                             </Col>
                         </Row>

@@ -9,7 +9,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import TopNavbar from './components/Navbar';
 import Content from './components/Content';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || '-';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
