@@ -20,3 +20,7 @@
         max-width: 100%; /* Ocupa el 40% del ancho de la pantalla */
     }
 }
+.slick-arrow,
+.slick-dots {
+  display: none !important;
+}
